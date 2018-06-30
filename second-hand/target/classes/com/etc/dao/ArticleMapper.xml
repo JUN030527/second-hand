@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.etc.dao.ArticleMapper">
+<!-- id为dao包里的BlogMapper接口的方法名  resultType是方法的返回值类型，写具体的位置-->
+  <select id="getArticle" resultType="com.etc.entity.Article">
+    select * from article 
+  </select>
+  <!-- 映射articleMapper接口类的getArticleById方法   在mybatis里#{}表示佔位符的寫法-->
+  <select id="getArticleById" resultType="com.etc.entity.Article">
+  	select * from article where articleId=#{articleId}
+  </select>
+  
+  <insert id="addArticle" parameterType="com.etc.entity.Article">
+  	insert into article values(null,#{articleTitle},#{articleContent},#{articleAuthor},now())
+  </insert>
+  
+  <delete id="delArticleById">
+  	delete from article where articleId=#{articleId}
+  </delete>
+  <!-- 参数是一个对象，所以要用参数匿名获取类中的属性 -->
+  <update id="updArticleById" parameterType="com.etc.entity.Article">
+  	update article set articleTitle=#{article.articleTitle},articleContent=#{article.articleContent},articleAuthor=#{article.articleAuthor} where articleId=#{articleId}
+  </update>
+  
+ <!--  <update id="addArticle" parameterType="com.etc.entity.Article">
+        update article
+        <set>
+            <if test="articleTitle != null">articleTitle=#{articleTitle},</if>
+            <if test="articleContent != null">articleContent=#{articleContent},</if>
+            <if test="articleAuthor != null">articleAuthor=#{articleAuthor},</if>
+            <if test="articleDate != null">articleDate=#{articleDate}</if>
+        </set>
+        where articleId=#{articleId}
+  </update> -->
+  
+  
+</mapper>
